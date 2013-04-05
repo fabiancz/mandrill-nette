@@ -26,7 +26,7 @@ Add Mandrill API key to your parameters in your config.neon:
 ```neon
 parameters:
   mandrill:
-		apiKey: s-sUxBibVE0a0auzVK2bXw
+		apiKey: yourApiKey
 ```
 
 Register new service in your config.neon:
