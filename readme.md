@@ -25,8 +25,7 @@ Add Mandrill API key to your parameters in your config.neon:
 ```neon
 parameters:
   mandrill:
-		apiKey: yourApiKey
-<<<<<<< HEAD
+    apiKey: yourApiKey
 ```
 
 Register new service in your config.neon:
@@ -34,8 +33,6 @@ Register new service in your config.neon:
 services:
 	mandrill:
 		class: Fabian\Mandrill\Mandrill(%mandrill.apiKey%)
-=======
->>>>>>> Rewrited for Nette IMailer interface
 ```
 
 Then you can use MandrillMailer:
@@ -55,9 +52,6 @@ $mailer->send($mail);
 
 You can use \Nette\Mail\Message too:
 
-<<<<<<< HEAD
-__If you want to use some other Mandrill API method, that is not implemented, you'r welcome to fork and send pull requests!;)__ 
-=======
 ```php
 $mail = new \Nette\Mail\Message;
 $mail->addTo('joe@example.com', 'John Doe')
@@ -69,4 +63,3 @@ $mailer = new \Fabian\Mandrill\MandrillMailer(
 );
 $mailer->send($mail);
 ```
->>>>>>> Rewrited for Nette IMailer interface
