@@ -5,23 +5,12 @@ namespace Fabian\Mandrill;
 /**
  * Provides similar API to Nette\Mail\Message 
  */
-class Message {
-    /**
-     * Mandrill object
-     * @var Mandrill
-     */
-    private $mandrill;
-    
+class Message extends \Nette\Mail\Message {
     /**
      * Message parameters
      * @var array
      */
-    private $params = array();
-    
-    public function __construct(Mandrill $mandrill)
-    {
-        $this->mandrill = $mandrill;
-    }
+    private $mandrillParams = array();
 
     /**
     * Sets the sender of the message.
@@ -31,9 +20,9 @@ class Message {
     */
     public function setFrom($email, $name = NULL)
     {
-        $this->params['from_email'] = $email;
+        $this->mandrillParams['from_email'] = $email;
         if (!is_null($name)) {
-            $this->params['from_name'] = $name;
+            $this->mandrillParams['from_name'] = $name;
         }
         
         return $this;
@@ -46,7 +35,7 @@ class Message {
     */
     public function setBody($body)
     {
-        $this->params['text'] = $body;
+        $this->mandrillParams['text'] = $body;
         
         return $this;
     }
@@ -59,7 +48,7 @@ class Message {
     */
     public function setHtmlBody($html, $basePath = NULL)
     {
-        $this->params['html'] = $html;
+        $this->mandrillParams['html'] = $html;
         
         return $this;
     }
@@ -71,7 +60,7 @@ class Message {
     */
     public function setSubject($subject)
     {
-        $this->params['subject'] = $subject;
+        $this->mandrillParams['subject'] = $subject;
         
         return $this;
     }
@@ -84,14 +73,14 @@ class Message {
     */
     public function addTo($email, $name = NULL)
     {
-        if (!isset($this->params['to'])) {
-            $this->params['to'] = array();
+        if (!isset($this->mandrillParams['to'])) {
+            $this->mandrillParams['to'] = array();
         }
         $recipient = array('email' => $email);
         if (!is_null($name)) {
             $recipient['name'] = $name;
         }
-        $this->params['to'][] = $recipient;
+        $this->mandrillParams['to'][] = $recipient;
         
         return $this;
     }
@@ -103,10 +92,10 @@ class Message {
      */
     public function addTag($tag)
     {
-        if (!isset($this->params['tags'])) {
-            $this->params['tags'] = array();
+        if (!isset($this->mandrillParams['tags'])) {
+            $this->mandrillParams['tags'] = array();
         }
-        $this->params['tags'][] = $tag;
+        $this->mandrillParams['tags'][] = $tag;
         
         return $this;
     }
@@ -118,7 +107,7 @@ class Message {
      */
     public function setAsync($async = TRUE)
     {
-        $this->params['async'] = $async;
+        $this->mandrillParams['async'] = $async;
         
         return $this;
     }
@@ -131,19 +120,17 @@ class Message {
      */
     public function setParam($param, $value)
     {
-        $this->params[$param] = $value;
+        $this->mandrillParams[$param] = $value;
         
         return $this;
     }
-
+    
     /**
-     * Send email 
+     * Returns Mandrill params
+     * @return array
      */
-    public function send()
+    public function getMandrillParams()
     {
-        $this->mandrill->call(
-            '/messages/send',
-            array('message' => $this->params)
-        );
+        return $this->mandrillParams;
     }
 }

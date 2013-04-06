@@ -2,7 +2,12 @@
 
 namespace Fabian\Mandrill;
 
-class Mandrill {
+/**
+ * Provides functionality to compose and send email via Mandrill service.
+ * 
+ * @author Lukas Vana
+ */
+class MandrillMailer implements \Nette\Mail\IMailer {
     /**
      * Mandrill API key
      * @var string
@@ -26,43 +31,66 @@ class Mandrill {
     {
         $this->apiKey = $apiKey;
     }
+
+    /**
+     * Sends email via Mandrill.
+     * @return void
+     */
+    public function send(\Nette\Mail\Message $message)
+    {
+        if ($message instanceof Message) {
+            $params = $message->getMandrillParams();
+        } else {
+            $params = $this->parseNetteMessage($message);
+        }
+        
+        $this->callApi($params);
+    }
     
     /**
-     * Get Mandrill API key
-     * @return string
+     * Parse Nette Message headers to Mandrill API params
+     * @param \Nette\Mail\Message $message
+     * @return array
      */
-    public function getApiKey()
+    private function parseNetteMessage(\Nette\Mail\Message $message)
     {
-        return $this->apiKey;
+        $params = array();
+        
+        $params['subject'] = $message->getSubject();
+        $params['text'] = $message->getBody();
+        $params['html'] = $message->getHtmlBody();
+        $from = $message->getFrom();
+        $params['from_email'] = key($from);
+        $params['from_name'] = $from[$params['from_email']];
+        $recipients = $message->getHeader('To');
+        $params['to'] = array();
+        foreach ($recipients as $email => $name) {
+            $recipient = array('email' => $email);
+            if (!empty($name)) {
+                $recipient['name'] = $name;
+            }
+            $params['to'][] = $recipient;
+        }
+        
+        return $params;
     }
 
     /**
-     * Get Mandril API endpoint
-     * @return type 
-     */
-    public function getApiEndpoint()
-    {
-        return $this->apiEndpoint;
-    }
-    
-    /**
-     * Call Mandril API by CURL POST
-     * (Every call to Mandrill API should be POST, see: https://mandrillapp.com/api/docs/)
-     * 
-     * DO NOT CALL THIS DIRECTLY. USE CLASSES LIKE Fabian\Mandrill\Message FOR FACILITATION!;)
-     * 
-     * @param string $method API method
-     * @param array $params API method params
+     * Call Mandrill API and send email
+     * @param array $params
      * @return string
      * @throws MandrillException 
      */
-    public function call($method, array $params = array())
+    private function callApi(array $params)
     {
+        $params = array('message' => $params);
         $params['key'] = $this->apiKey;
         $params = json_encode($params);
         
+        $method = '/messages/send';
+        
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_USERAGENT, 'Mandrill-Nette-PHP/0.1');
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mandrill-Nette-PHP/0.2');
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

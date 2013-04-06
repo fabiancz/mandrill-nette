@@ -6,8 +6,8 @@
 
 	<title>Class Fabian\Mandrill\Message</title>
 
-	<script type="text/javascript" src="resources/combined.js?2703114862"></script>
-	<script type="text/javascript" src="elementlist.js?1094443453"></script>
+	<script type="text/javascript" src="resources/combined.js?1716676779"></script>
+	<script type="text/javascript" src="elementlist.js?1213687997"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="resources/style.css?3505392360" />
 
 </head>
@@ -37,7 +37,7 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
-				<li><a href="class-Fabian.Mandrill.Mandrill.html">Mandrill</a></li>
+				<li><a href="class-Fabian.Mandrill.MandrillMailer.html">MandrillMailer</a></li>
 				<li class="active"><a href="class-Fabian.Mandrill.Message.html">Message</a></li>
 			</ul>
 
@@ -94,6 +94,19 @@
 
 	</div>
 
+	<dl class="tree">
+		<dd style="padding-left:0px">
+Nette\Mail\Message
+			
+			
+		</dd>
+		<dd style="padding-left:30px">
+			<img src="resources/inherit.png" alt="Extended by" />
+<b><span>Fabian\Mandrill\Message</span></b>			
+			
+			
+		</dd>
+	</dl>
 
 
 
@@ -108,42 +121,13 @@
 		<b>Namespace:</b> <a href="namespace-Fabian.html">Fabian</a>\<a href="namespace-Fabian.Mandrill.html">Mandrill</a><br />
 		
 
-		<b>Located at</b> <a href="source-class-Fabian.Mandrill.Message.html#5-149" title="Go to source code">Message.php</a><br />
+		<b>Located at</b> <a href="source-class-Fabian.Mandrill.Message.html#5-136" title="Go to source code">Message.php</a><br />
 	</div>
 
 
 
 	<table class="summary" id="methods">
 	<caption>Methods summary</caption>
-	<tr data-order="__construct" id="___construct">
-
-		<td class="attributes"><code>
-			 public 
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#___construct">#</a>
-		<code><a href="source-class-Fabian.Mandrill.Message.html#21-24" title="Go to source code">__construct</a>( <span><code><a href="class-Fabian.Mandrill.Mandrill.html">Fabian\Mandrill\Mandrill</a></code> <var>$mandrill</var></span> )</code>
-
-		<div class="description short">
-			
-		</div>
-
-		<div class="description detailed hidden">
-			
-
-
-
-
-
-
-
-		</div>
-		</div></td>
-	</tr>
 	<tr data-order="setFrom" id="_setFrom">
 
 		<td class="attributes"><code>
@@ -155,7 +139,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setFrom">#</a>
-		<code><a href="source-class-Fabian.Mandrill.Message.html#26-40" title="Go to source code">setFrom</a>( <span>string <var>$email</var></span>, <span>string <var>$name</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-Fabian.Mandrill.Message.html#15-29" title="Go to source code">setFrom</a>( <span>string <var>$email</var></span>, <span>string <var>$name</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			
@@ -200,7 +184,7 @@ href="mailto:doe&#64;example.com">doe&#64;<!---->example.com</a>&gt;</dd>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setBody">#</a>
-		<code><a href="source-class-Fabian.Mandrill.Message.html#42-52" title="Go to source code">setBody</a>( <span>string <var>$body</var></span> )</code>
+		<code><a href="source-class-Fabian.Mandrill.Message.html#31-41" title="Go to source code">setBody</a>( <span>string <var>$body</var></span> )</code>
 
 		<div class="description short">
 			
@@ -242,7 +226,7 @@ href="mailto:doe&#64;example.com">doe&#64;<!---->example.com</a>&gt;</dd>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setHtmlBody">#</a>
-		<code><a href="source-class-Fabian.Mandrill.Message.html#54-65" title="Go to source code">setHtmlBody</a>( <span>string <var>$html</var></span>, <span>NOT <var>$basePath</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-Fabian.Mandrill.Message.html#43-54" title="Go to source code">setHtmlBody</a>( <span>string <var>$html</var></span>, <span>NOT <var>$basePath</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			
@@ -286,7 +270,7 @@ href="mailto:doe&#64;example.com">doe&#64;<!---->example.com</a>&gt;</dd>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setSubject">#</a>
-		<code><a href="source-class-Fabian.Mandrill.Message.html#67-77" title="Go to source code">setSubject</a>( <span>string <var>$subject</var></span> )</code>
+		<code><a href="source-class-Fabian.Mandrill.Message.html#56-66" title="Go to source code">setSubject</a>( <span>string <var>$subject</var></span> )</code>
 
 		<div class="description short">
 			
@@ -328,7 +312,7 @@ href="mailto:doe&#64;example.com">doe&#64;<!---->example.com</a>&gt;</dd>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_addTo">#</a>
-		<code><a href="source-class-Fabian.Mandrill.Message.html#79-97" title="Go to source code">addTo</a>( <span>string <var>$email</var></span>, <span>string <var>$name</var> = <span class="php-keyword1">NULL</span></span> )</code>
+		<code><a href="source-class-Fabian.Mandrill.Message.html#68-86" title="Go to source code">addTo</a>( <span>string <var>$email</var></span>, <span>string <var>$name</var> = <span class="php-keyword1">NULL</span></span> )</code>
 
 		<div class="description short">
 			
@@ -373,7 +357,7 @@ href="mailto:doe&#64;example.com">doe&#64;<!---->example.com</a>&gt;</dd>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_addTag">#</a>
-		<code><a href="source-class-Fabian.Mandrill.Message.html#99-112" title="Go to source code">addTag</a>( <span>string <var>$tag</var></span> )</code>
+		<code><a href="source-class-Fabian.Mandrill.Message.html#88-101" title="Go to source code">addTag</a>( <span>string <var>$tag</var></span> )</code>
 
 		<div class="description short">
 			
@@ -415,7 +399,7 @@ href="mailto:doe&#64;example.com">doe&#64;<!---->example.com</a>&gt;</dd>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setAsync">#</a>
-		<code><a href="source-class-Fabian.Mandrill.Message.html#114-124" title="Go to source code">setAsync</a>( <span>type <var>$async</var> = <span class="php-keyword1">TRUE</span></span> )</code>
+		<code><a href="source-class-Fabian.Mandrill.Message.html#103-113" title="Go to source code">setAsync</a>( <span>type <var>$async</var> = <span class="php-keyword1">TRUE</span></span> )</code>
 
 		<div class="description short">
 			
@@ -467,7 +451,7 @@ asynchronously, regardless of the value of async.</p>
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setParam">#</a>
-		<code><a href="source-class-Fabian.Mandrill.Message.html#126-137" title="Go to source code">setParam</a>( <span>string <var>$param</var></span>, <span>string <var>$value</var></span> )</code>
+		<code><a href="source-class-Fabian.Mandrill.Message.html#115-126" title="Go to source code">setParam</a>( <span>string <var>$param</var></span>, <span>string <var>$value</var></span> )</code>
 
 		<div class="description short">
 			
@@ -500,32 +484,36 @@ asynchronously, regardless of the value of async.</p>
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="send" id="_send">
+	<tr data-order="getMandrillParams" id="_getMandrillParams">
 
 		<td class="attributes"><code>
 			 public 
-			
+			array
 			
 			</code>
 		</td>
 
 		<td class="name"><div>
-		<a class="anchor" href="#_send">#</a>
-		<code><a href="source-class-Fabian.Mandrill.Message.html#139-148" title="Go to source code">send</a>( )</code>
+		<a class="anchor" href="#_getMandrillParams">#</a>
+		<code><a href="source-class-Fabian.Mandrill.Message.html#128-135" title="Go to source code">getMandrillParams</a>( )</code>
 
 		<div class="description short">
 			
-<p>Send email</p>
+<p>Returns Mandrill params</p>
 
 		</div>
 
 		<div class="description detailed hidden">
 			
-<p>Send email</p>
+<p>Returns Mandrill params</p>
 
 
 
 
+				<h4>Returns</h4>
+				<div class="list">
+					<code>array</code><br />
+				</div>
 
 
 

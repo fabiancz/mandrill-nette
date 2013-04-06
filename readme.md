@@ -5,8 +5,7 @@ Requirements
 
 * PHP 5.3
 * [Mandrill API key](https://mandrillapp.com/settings/index)
-
-Best used with [Nette framework](http://nette.org)
+* [Nette framework](http://nette.org)
 
 
 Installation
@@ -27,6 +26,7 @@ Add Mandrill API key to your parameters in your config.neon:
 parameters:
   mandrill:
 		apiKey: yourApiKey
+<<<<<<< HEAD
 ```
 
 Register new service in your config.neon:
@@ -34,19 +34,39 @@ Register new service in your config.neon:
 services:
 	mandrill:
 		class: Fabian\Mandrill\Mandrill(%mandrill.apiKey%)
+=======
+>>>>>>> Rewrited for Nette IMailer interface
 ```
 
-Then you can simply use exactly like \Nette\Mail\Message:
+Then you can use MandrillMailer:
 
 ```php
-$m = new \Fabian\Mandrill\Message($this->context->mandrill);
-$m->addTo('joe@example.com', 'John Doe')
+$mail = new \Fabian\Mandrill\Message();
+$mail->addTo('joe@example.com', 'John Doe')
    ->setSubject('First email')
    ->setBody("Hi,\n\nthis is first email using Mandrill.")
    ->setFrom('noreplay@yourdomain.com', 'Your Name')
-   ->send();
+   ->addTag('test-emails');
+$mailer = new \Fabian\Mandrill\MandrillMailer(
+    $this->context->parameters['mandrill']['apiKey']
+);
+$mailer->send($mail);
 ```
 
-For next methods you can see doc/.
+You can use \Nette\Mail\Message too:
 
+<<<<<<< HEAD
 __If you want to use some other Mandrill API method, that is not implemented, you'r welcome to fork and send pull requests!;)__ 
+=======
+```php
+$mail = new \Nette\Mail\Message;
+$mail->addTo('joe@example.com', 'John Doe')
+   ->setSubject('First email')
+   ->setBody("Hi,\n\nthis is first email using Mandrill.")
+   ->setFrom('noreplay@yourdomain.com', 'Your Name')
+$mailer = new \Fabian\Mandrill\MandrillMailer(
+    $this->context->parameters['mandrill']['apiKey']
+);
+$mailer->send($mail);
+```
+>>>>>>> Rewrited for Nette IMailer interface
