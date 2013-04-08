@@ -60,6 +60,9 @@ class MandrillMailer implements \Nette\Mail\IMailer {
         $params['text'] = $message->getBody();
         $params['html'] = $message->getHtmlBody();
         $from = $message->getFrom();
+        if (empty($from)) {
+            throw new MandrillException('Please specify From parameter!');
+        }
         $params['from_email'] = key($from);
         $params['from_name'] = $from[$params['from_email']];
         $recipients = $message->getHeader('To');
