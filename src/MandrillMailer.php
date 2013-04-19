@@ -119,7 +119,7 @@ class MandrillMailer implements \Nette\Mail\IMailer {
             throw new MandrillException('Unable to parse JSON response');
         }
         if ($info['http_code'] != 200) {
-            throw new MandrillException('Error '.$info['http_code']);
+            throw new MandrillException('Error '.$info['http_code'].' Message: '.$result['message']);
         }
         
         curl_close($ch);
