@@ -28,13 +28,6 @@ parameters:
     apiKey: yourApiKey
 ```
 
-Register new service in your config.neon:
-```neon
-services:
-	mandrill:
-		class: Fabian\Mandrill\Mandrill(%mandrill.apiKey%)
-```
-
 Then you can use MandrillMailer:
 
 ```php
