@@ -43,6 +43,10 @@ class MandrillMailer implements \Nette\Mail\IMailer {
         } else {
             $params = $this->parseNetteMessage($message);
         }
+        $attachments = $this->parseAttachments($message);
+        if (!empty($attachments)) {
+             $params['attachments'] = $attachments;
+        }
 
         $this->callApi($params);
     }
@@ -74,8 +78,6 @@ class MandrillMailer implements \Nette\Mail\IMailer {
             }
             $params['to'][] = $recipient;
         }
-
-        $params['attachments'] = $this->parseAttachments($message);
 
         return $params;
     }
