@@ -4,7 +4,7 @@ namespace Fabian\Mandrill;
 
 /**
  * Provides functionality to compose and send email via Mandrill service.
- * 
+ *
  * @author Lukas Vana
  */
 class MandrillMailer implements \Nette\Mail\IMailer {
@@ -13,20 +13,20 @@ class MandrillMailer implements \Nette\Mail\IMailer {
      * @var string
      */
     private $apiKey;
-    
+
     /**
      * Mandrill API endpoint
      * @var string
      */
     private $apiEndpoint = "https://mandrillapp.com/api/1.0";
-    
+
     /**
      * Input and output format
      * Currently supported only json;)
      * @var string
      */
     private $apiFormat = 'json';
-    
+
     public function __construct($apiKey)
     {
         $this->apiKey = $apiKey;
@@ -43,10 +43,14 @@ class MandrillMailer implements \Nette\Mail\IMailer {
         } else {
             $params = $this->parseNetteMessage($message);
         }
-        
+        $attachments = $this->parseAttachments($message);
+        if (!empty($attachments)) {
+             $params['attachments'] = $attachments;
+        }
+
         $this->callApi($params);
     }
-    
+
     /**
      * Parse Nette Message headers to Mandrill API params
      * @param \Nette\Mail\Message $message
@@ -55,7 +59,7 @@ class MandrillMailer implements \Nette\Mail\IMailer {
     private function parseNetteMessage(\Nette\Mail\Message $message)
     {
         $params = array();
-        
+
         $params['subject'] = $message->getSubject();
         $params['text'] = $message->getBody();
         $params['html'] = $message->getHtmlBody();
@@ -74,7 +78,7 @@ class MandrillMailer implements \Nette\Mail\IMailer {
             }
             $params['to'][] = $recipient;
         }
-        
+
         return $params;
     }
 
@@ -82,16 +86,16 @@ class MandrillMailer implements \Nette\Mail\IMailer {
      * Call Mandrill API and send email
      * @param array $params
      * @return string
-     * @throws MandrillException 
+     * @throws MandrillException
      */
     private function callApi(array $params)
     {
         $params = array('message' => $params);
         $params['key'] = $this->apiKey;
         $params = json_encode($params);
-        
+
         $method = '/messages/send';
-        
+
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_USERAGENT, 'Mandrill-Nette-PHP/0.2');
         curl_setopt($ch, CURLOPT_POST, true);
@@ -105,13 +109,13 @@ class MandrillMailer implements \Nette\Mail\IMailer {
             'Content-Type: application/'.$this->apiFormat)
         );
         curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
-        
+
         if (curl_error($ch)) {
             throw new MandrillException(
                 'curl error while calling '.$method.': '.  curl_error($ch)
             );
         }
-        
+
         $response = curl_exec($ch);
         $info = curl_getinfo($ch);
         $result = json_decode($response, true);
@@ -121,9 +125,40 @@ class MandrillMailer implements \Nette\Mail\IMailer {
         if ($info['http_code'] != 200) {
             throw new MandrillException('Error '.$info['http_code'].' Message: '.$result['message']);
         }
-        
+
         curl_close($ch);
-        
+
         return $result;
+    }
+
+    private function parseAttachments(\Nette\Mail\Message $message){
+        $attachments = array();
+
+        foreach ($message->getAttachments() as $attachment) {
+          $attachments[] = array(
+            'type' => $attachment->getHeader('Content-Type'),
+            'name' => $this->extractFilename($attachment->getHeader('Content-Disposition')),
+            'content' => $this->encodeMessage($attachment)
+          );
+        }
+
+        return $attachments;
+      }
+
+    private function extractFilename($header){
+        preg_match('/filename="([a-zA-Z0-9. -_]{1,})"/', $header, $matches);
+        return $matches[1];
+    }
+
+    private function encodeMessage($attachment){
+        $lines = explode("\n", $attachment->getEncodedMessage());
+
+        $output = '';
+
+        for($i=4; $i < count($lines); $i++){
+          $output .= $lines[$i];
+        }
+
+        return $output;
     }
 }
