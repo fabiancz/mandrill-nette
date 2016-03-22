@@ -4,7 +4,7 @@
     "keywords": ["email", "api", "nette"],
     "authors": [{"name": "Lukas Vana", "email": "fabian@fabian.cz", "homepage": "http://home.fabian.cz", "role": "Developer"}],
     "description" : "Mandrill API library with Message class implementation like in Nette framework",
-    "version": "0.1",
+    "version": "0.2",
     "license": "MIT",
     "require": {
         "php": ">=5.3.0",

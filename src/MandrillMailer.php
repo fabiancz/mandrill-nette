@@ -78,6 +78,11 @@ class MandrillMailer implements \Nette\Mail\IMailer {
             }
             $params['to'][] = $recipient;
         }
+        
+        $bcc = $message->getHeader('Bcc');
+        if (!empty($bcc)) {
+            $params['bcc_address'] = $bcc;
+        }
 
         return $params;
     }

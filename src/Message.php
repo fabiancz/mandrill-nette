@@ -133,4 +133,11 @@ class Message extends \Nette\Mail\Message {
     {
         return $this->mandrillParams;
     }
+    
+    public function addBcc($email, $name = NULL)
+    {
+        $this->mandrillParams['bcc_address'] = $email;
+        
+        return $this;
+    }
 }
