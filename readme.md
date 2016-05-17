@@ -14,7 +14,12 @@ Installation
 The best way to install is using  [Composer](http://getcomposer.org/):
 
 ```sh
-$ composer require fabian/mandrill:@dev
+$ composer require fabian/mandrill
+```
+
+If you'r using older Nette with Nette\Mail version <=2.3.0, you have to use mandrill-nette version 1.1.0:
+```sh
+$ composer require fabian/mandrill:1.1.0
 ```
 
 Usage
