@@ -84,7 +84,24 @@ class Message extends \Nette\Mail\Message {
         
         return $this;
     }
-    
+
+    /**
+     * Adds the reply-to address.
+     * @param  string  email or format "John Doe" <doe@example.com>
+     * @param  string
+     * @return self
+     */
+    public function addReplyTo($email, $name = null) {
+        if (!isset($this->mandrillParams['headers'])) {
+            $this->mandrillParams['headers'] = array();
+        }
+        $this->mandrillParams['headers']['Reply-To'] = $email;
+
+        return $this;
+    }
+
+
+
     /**
      * Add tag form Mandrill Outbound info
      * @param string $tag
