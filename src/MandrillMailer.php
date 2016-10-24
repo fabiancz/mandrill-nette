@@ -78,7 +78,13 @@ class MandrillMailer implements \Nette\Mail\IMailer {
             }
             $params['to'][] = $recipient;
         }
-        
+
+        $replyTo = $message->getHeader('Reply-To');
+        if (!empty($replyTo)) {
+            $params['headers'] = array();
+            $params['headers']['Reply-To'] = array_keys($replyTo)[0];
+        }
+
         $bcc = $message->getHeader('Bcc');
         if (!empty($bcc)) {
             $params['bcc_address'] = $bcc;
