@@ -61,3 +61,12 @@ $mailer = new \Fabian\Mandrill\MandrillMailer(
 );
 $mailer->send($mail);
 ```
+
+### Mandrill templates
+
+If you'r using [templates](https://mandrill.zendesk.com/hc/en-us/articles/205582507-Getting-Started-with-Templates), you can send email using sendTemplate() instead of send():
+```php
+$mailer->sendTemplate($mail, 'template_name', array(
+    array('name' => 'header', 'content' => 'testing header'),
+));
+```

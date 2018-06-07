@@ -34,6 +34,7 @@ class MandrillMailer implements \Nette\Mail\IMailer {
 
     /**
      * Sends email via Mandrill.
+     * @param $message
      * @return void
      */
     public function send(\Nette\Mail\Message $message)
@@ -47,8 +48,35 @@ class MandrillMailer implements \Nette\Mail\IMailer {
         if (!empty($attachments)) {
              $params['attachments'] = $attachments;
         }
+        $params = array('message' => $params);
 
-        $this->callApi($params);
+        $this->callApi('/messages/send', $params);
+    }
+
+    /**
+     * Sends email via Mandrill template.
+     * @param $message
+     * @param $templateName
+     * @param $templateContent dynamic content
+     * @return void
+     */
+    public function sendTemplate(\Nette\Mail\Message $message, $templateName, $templateContent)
+    {
+        if ($message instanceof Message) {
+            $params = $message->getMandrillParams();
+        } else {
+            $params = $this->parseNetteMessage($message);
+        }
+        $attachments = $this->parseAttachments($message);
+        if (!empty($attachments)) {
+             $params['attachments'] = $attachments;
+        }
+        $params = array('message' => $params);
+
+        $params['template_name'] = $templateName;
+        $params['template_content'] = $templateContent;
+
+        $this->callApi('/messages/send-template', $params);
     }
 
     /**
@@ -78,13 +106,7 @@ class MandrillMailer implements \Nette\Mail\IMailer {
             }
             $params['to'][] = $recipient;
         }
-
-        $replyTo = $message->getHeader('Reply-To');
-        if (!empty($replyTo)) {
-            $params['headers'] = array();
-            $params['headers']['Reply-To'] = array_keys($replyTo)[0];
-        }
-
+        
         $bcc = $message->getHeader('Bcc');
         if (!empty($bcc)) {
             $params['bcc_address'] = $bcc;
@@ -99,13 +121,10 @@ class MandrillMailer implements \Nette\Mail\IMailer {
      * @return string
      * @throws MandrillException
      */
-    private function callApi(array $params)
+    private function callApi($method, array $params)
     {
-        $params = array('message' => $params);
         $params['key'] = $this->apiKey;
         $params = json_encode($params);
-
-        $method = '/messages/send';
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_USERAGENT, 'Mandrill-Nette-PHP/0.2');
