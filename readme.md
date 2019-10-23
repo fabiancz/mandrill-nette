@@ -3,7 +3,7 @@
 Requirements
 ------------
 
-* PHP 5.3
+* PHP ^7.1.3
 * [Mandrill API key](https://mandrillapp.com/settings/index)
 * [Nette framework](http://nette.org)
 
